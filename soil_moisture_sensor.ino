@@ -10,7 +10,7 @@ int percentageValue = 0;
 int MAX_SENSOR_VALUE = 600; // measured by putting moisture sensor into water
 int MIN_SENSOR_VALUE = 6; // measured  by putting moisture sensor in the air (not used)
 int SENSOR_INIT_TIME = 3*1000; // we have to wait for stabilisation after power is turned on
-int SLEEP_TIME = 4*60*1000; // sleeps to increase life time of sensor. For develepment change to 5*1000
+long SLEEP_TIME = 4L*60L*1000L; // sleeps to increase life time of sensor. It must be long because maximim int value is 32767. For develepment change to 4L*1000L
 
 /**
  * @author Bartek Kwiatkowski, 2018
@@ -39,11 +39,11 @@ void loop() {
   Serial.println(moistureToString(analogValue));
   
 
-  if (percentageValue >= 60) {
+  if (percentageValue >= 75) {
     digitalWrite(led12green, HIGH);
     digitalWrite(led11yellow, LOW);
     digitalWrite(led10red, LOW);
-  } else if (percentageValue >= 40) {
+  } else if (percentageValue >= 50) {
     digitalWrite(led12green, LOW);
     digitalWrite(led11yellow, HIGH);
     digitalWrite(led10red, LOW);
