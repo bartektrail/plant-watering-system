@@ -7,7 +7,7 @@ Current implmentation checks soil moisture once every 4 hours and show it's leve
 
 ## CHANGE LOG  
 
-### Added Temperature and Moisture sensor DHT21
+### Added Temperature and Moisture sensor DHT21 12.01.2018 (2nd note)
 
 Testing new sensor.
 
