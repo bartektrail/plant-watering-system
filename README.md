@@ -7,6 +7,11 @@ Current implmentation checks soil moisture once every 4 hours and show it's leve
 
 ## CHANGE LOG  
 
+### Fixed SLEEP_TIME 12.01.2018
+
+I used int which maximum value is 32767 and it's not enough for 4 hours.  
+delay() function takes long parameter (not int) so I changed SLEEP_TIME to long.  
+
 ### Resolving sensor problem 05.01.2018
 
 Moisture sensor is repleaced with different one.  
