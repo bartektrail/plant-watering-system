@@ -1,3 +1,8 @@
+#include <dht.h>
+ 
+dht DHT21;
+#define DHT21PIN 2    // pin 2 for temperature and humidity sensor
+
 #define A0  A0
 int led12green = 12;
 int led11yellow = 11;
@@ -28,14 +33,17 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+
+  // MOISTURE SENSOR ######################################
   digitalWrite(sensorPower9, HIGH);
   delay(SENSOR_INIT_TIME);
   
   analogValue = analogRead(A0);
   percentageValue = moisture(analogValue);
-  
-  Serial.println(analogValue);
-  Serial.println(percentageValue);
+
+  Serial.print("Moisture sensor value: ");
+  Serial.print(analogValue);
+  Serial.print("  ");
   Serial.println(moistureToString(analogValue));
   
 
@@ -53,8 +61,41 @@ void loop() {
     digitalWrite(led10red, HIGH);
   }
   
+  digitalWrite(sensorPower9, LOW); // turns off power of moisture sensor to increase its life time
 
-  digitalWrite(sensorPower9, LOW); // turns off power of sensor to increase its life time
+
+
+
+
+  // TEMPERATURE AND HUMIDITY SENSOR ######################
+  int chk = DHT21.read(DHT21PIN);         //reads sensor status
+ 
+  Serial.print("DHT21 sensor status: ");
+  switch (chk)
+  {
+    case DHTLIB_OK: 
+        Serial.print("OK"); 
+        break;
+    case DHTLIB_ERROR_CHECKSUM: 
+        Serial.println("ERROR checksum"); 
+        break;
+    case DHTLIB_ERROR_TIMEOUT: 
+        Serial.println("ERROR timeout"); 
+        break;
+    default: 
+        Serial.println("ERROR unknown"); 
+        break;
+  }
+  Serial.print("  ");
+  Serial.print("Humidity (%): ");
+  Serial.print((float)DHT21.humidity, 2);
+  Serial.print("  ");
+  Serial.print("Temperature (C): ");
+  Serial.println((float)DHT21.temperature, 2);
+
+
+
+  
   delay(SLEEP_TIME);
 }
 
